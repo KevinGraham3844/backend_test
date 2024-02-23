@@ -1,23 +1,9 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const PORT = process.env.PORT || 3001
-const mongoose = require('mongoose')
-const password = process.argv[2]
-
-mongoose.set('strictQuery', false)
-mongoose.connect(url)
-
-const noteSchema = new mongoose.Schema({
-    content: String,
-    important: Boolean
-})
-
-const Note = mongoose.model('Note', noteSchema)
-
-const url = 
-    `mongodb+srv://fullstack:${password}@cluster0.kwmft4u.mongodb.net/noteApp?retryWrites=true&w=majority&appName=Cluster0`
-
+const PORT = process.env.PORT
+const Note = require('./models/note')
 
 let notes = [
     {
@@ -56,9 +42,6 @@ const unknownEndpoint = (request, response) => {
     response.status(404).send({ error: 'unknown endpoint' })
 }
 
-
-
-
 app.get('/', (request, response) => {
     response.send('<h1>Hello World!</h1>')
 })
@@ -67,7 +50,7 @@ app.get('/api/notes', (request, response) => {
     Note.find({}).then(notes => {
         response.json(notes)
     })
-})
+  })
 
 app.get('/api/notes/:id', (request, response) => {
     const id = Number(request.params.id)
