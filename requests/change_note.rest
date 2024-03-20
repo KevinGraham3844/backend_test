@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/notes/65d76353acb29d3cb9f24811
+Content-Type: application/json
+
+{
+    "content": "CSS is not hard",
+    "important": true
+}
